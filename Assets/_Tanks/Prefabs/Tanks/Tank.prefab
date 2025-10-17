@@ -401,7 +401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Tanks.Complete.TankMovement
   m_PlayerNumber: 1
-  m_Speed: 12
+  m_Speed: 10
   m_TurnSpeed: 180
   m_IsDirectControl: 0
   m_MovementAudio: {fileID: 3672962446228356628}
@@ -432,7 +432,7 @@ MonoBehaviour:
   m_MaxLaunchForce: 20
   m_MaxChargeTime: 0.75
   m_ShotCooldown: 0.3
-  m_MaxDamage: 33
+  m_MaxDamage: 30
   m_ExplosionForce: 30
   m_ExplosionRadius: 5
   m_InputUser: {fileID: 0}
