@@ -17,14 +17,17 @@ namespace Tanks.Complete
 
         private Vector3 m_AimToRig;                     // The offset to apply to the position so the child camera aim at the desired point 
 
-        private void Awake ()
+        private void Awake()
         {
-            m_Camera = GetComponentInChildren<Camera> ();
-            
+            m_Camera = GetComponentInChildren<Camera>();
+        }
+
+        private void OnEnable()
+        {
             // plane in which the camera rig is in
             Plane p = new Plane(Vector3.up, transform.position);
             Ray r = new Ray(m_Camera.transform.position, m_Camera.transform.forward);
-            p.Raycast(r, out float d );
+            p.Raycast(r, out float d);
 
             // This is where the camera aim on the rig plane
             var aimTArget = r.GetPoint(d);
