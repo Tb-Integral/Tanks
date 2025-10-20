@@ -1217,14 +1217,14 @@ MonoBehaviour:
       m_Calls: []
   m_text: '<u>Left Keyboard</u>
 
-    
+
 
     W: Foward
 
     S: Backward
 
-    A:
-    Rotate Left
+    A: Rotate
+    Left
 
     D: Rotate Right
 
@@ -2138,7 +2138,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: '<u>Right Keyboard</u>
 
-    
+
 
     Up: Forward
 

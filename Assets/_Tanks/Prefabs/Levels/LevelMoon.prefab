@@ -2355,6 +2355,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5452403333091727821}
     m_Modifications:
+    - target: {fileID: 5777929694917086574, guid: 9a7f2947cc64694478f2bbf5a563c077, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
     - target: {fileID: 6087005955884149171, guid: 9a7f2947cc64694478f2bbf5a563c077, type: 3}
       propertyPath: m_Name
       value: MoonRocket
