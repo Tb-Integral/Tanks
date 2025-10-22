@@ -15,6 +15,12 @@ namespace Tanks.Complete
             Game
         }
 
+        public enum Language 
+        {
+            English,
+            Russian
+        }
+
         // Data about the selected tanks passed from the menu to the GameManager
         public class PlayerData
         {
@@ -34,11 +40,17 @@ namespace Tanks.Complete
         public GameObject m_Tank2Prefab;            // The Prefab used by the tank in Slot 2 of the Menu
         public GameObject m_Tank3Prefab;            // The Prefab used by the tank in Slot 3 of the Menu
         public GameObject m_Tank4Prefab;            // The Prefab used by the tank in Slot 4 of the Menu
+
+        [Header("Change Language In Menu")]
+        public GameObject m_TitleCanvas;
         
         [FormerlySerializedAs("m_Tanks")] 
         public TankManager[] m_SpawnPoints;         // A collection of managers for enabling and disabling different aspects of the tanks.
         
         private GameState m_CurrentState;
+
+        [HideInInspector]
+        public Language m_Language;
         
         private int m_RoundNumber;                  // Which round the game is currently on.
         private WaitForSeconds m_StartWait;         // Used to have a delay whilst the round starts.
@@ -50,9 +62,20 @@ namespace Tanks.Complete
         private int m_PlayerCount = 0;              // The number of players (2 to 4), decided from the number of PlayerData passed by the menu
         private TextMeshProUGUI m_TitleText;        // The text used to display game message. Automatically found as part of the Menu prefab
 
+        //text from menu
+        private TextMeshProUGUI m_GameNameText;
+        private TextMeshProUGUI m_SelectTankText;
+
         private void Start()
         {
             m_CurrentState = GameState.MainMenu;
+            m_Language = Language.English;
+
+            if (m_TitleCanvas != null)
+            {
+                m_GameNameText = m_TitleCanvas.transform.Find("GameNameText").GetComponent<TextMeshProUGUI>();
+                m_SelectTankText = m_TitleCanvas.transform.Find("PlayerSelectButton").transform.Find("SelectTankText").GetComponent<TextMeshProUGUI>();
+            }
 
             // Find the text used to display game info. Need to look at inactive object too, as the Menu prefab (which contains it) may be
             // disabled at the start when the user have a Title Screen which will enable the Menu.
@@ -198,7 +221,7 @@ namespace Tanks.Complete
 
             // Increment the round number and display text showing the players what round it is.
             m_RoundNumber++;
-            m_TitleText.text = "ROUND " + m_RoundNumber;
+            m_TitleText.text = (m_Language == Language.English ? "ROUND ": "–¿”Õƒ ") + m_RoundNumber;
 
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return m_StartWait;
@@ -305,11 +328,11 @@ namespace Tanks.Complete
         private string EndMessage()
         {
             // By default when a round ends there are no winners so the default end message is a draw.
-            string message = "DRAW!";
+            string message = m_Language == Language.English ? "DRAW!" : "Õ»◊‹ﬂ!";
 
             // If there is a winner then change the message to reflect that.
             if (m_RoundWinner != null)
-                message = m_RoundWinner.m_ColoredPlayerText + " WINS THE ROUND!";
+                message = m_RoundWinner.m_ColoredPlayerText + (m_Language == Language.English ? " WINS THE ROUND!" : " ¬€»√–€¬¿≈“ –¿”Õƒ!");
 
             // Add some line breaks after the initial message.
             message += "\n\n\n\n";
@@ -317,12 +340,12 @@ namespace Tanks.Complete
             // Go through all the tanks and add each of their scores to the message.
             for (int i = 0; i < m_PlayerCount; i++)
             {
-                message += m_SpawnPoints[i].m_ColoredPlayerText + ": " + m_SpawnPoints[i].m_Wins + " WINS\n";
+                message += m_SpawnPoints[i].m_ColoredPlayerText + ": " + m_SpawnPoints[i].m_Wins + (m_Language == Language.English ? " WINS\n" : " œŒ¡≈ƒ\n");
             }
 
             // If there is a game winner, change the entire message to reflect that.
             if (m_GameWinner != null)
-                message = m_GameWinner.m_ColoredPlayerText + " WINS THE GAME!";
+                message = m_GameWinner.m_ColoredPlayerText + (m_Language == Language.English ? " WINS THE GAME!" : " ¬€»√–€¬¿≈“ »√–”!");
 
             return message;
         }
@@ -352,6 +375,28 @@ namespace Tanks.Complete
             for (int i = 0; i < m_PlayerCount; i++)
             {
                 m_SpawnPoints[i].DisableControl();
+            }
+        }
+
+        public void ChangeLanguageToRu()
+        {
+            m_Language = Language.Russian;
+
+            if (m_TitleCanvas != null)
+            {
+                m_GameNameText.text = "“¿Õ »!";
+                m_SelectTankText.text = "¬˚·‡Ú¸ “‡ÌÍ";
+            }
+        }
+
+        public void ChangeLanguageToEng()
+        {
+            m_Language = Language.English;
+
+            if (m_TitleCanvas != null)
+            {
+                m_GameNameText.text = "TANKS!";
+                m_SelectTankText.text = "Select Tank";
             }
         }
     }

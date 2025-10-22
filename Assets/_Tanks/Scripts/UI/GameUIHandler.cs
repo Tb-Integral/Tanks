@@ -91,7 +91,7 @@ namespace Tanks.Complete
                 var slot = m_PlayerSlots[i];
 
                 // set the preview on the slot 
-                slot.SetTankPreview(tanksPrefabs.Length > i ? tanksPrefabs[i] : tanksPrefabs[0]);
+                slot.SetTankPreview(tanksPrefabs.Length > i ? tanksPrefabs[i] : tanksPrefabs[0], m_GameManager.m_Language);
 
                 var i1 = i;
                 slot.m_AddControlButton.onClick.AddListener(() =>
@@ -122,9 +122,17 @@ namespace Tanks.Complete
 
                     // If 2 slots or more are now used, we can start the game, so re-enable the Start button and update
                     // the text on the Start button
+
                     if (m_SlotUsed >= 2)
                     {
-                        m_StartButtonText.text = "Start";
+                        if (m_GameManager.m_Language == GameManager.Language.Russian)
+                        {
+                            m_StartButtonText.text = "Старт";
+                        }
+                        else if (m_GameManager.m_Language == GameManager.Language.English)
+                        {
+                            m_StartButtonText.text = "Start";
+                        }
                         m_StartButton.interactable = true;
                     }
                 });
@@ -139,7 +147,14 @@ namespace Tanks.Complete
                     // Start button and reset the text to the required warning
                     if (m_SlotUsed < 2)
                     {
-                        m_StartButtonText.text = "2 Tanks required";
+                        if (m_GameManager.m_Language == GameManager.Language.Russian)
+                        {
+                            m_StartButtonText.text = "Минимум 2 танка";
+                        }
+                        else if (m_GameManager.m_Language == GameManager.Language.English)
+                        {
+                            m_StartButtonText.text = "2 Tanks required";
+                        }
                         m_StartButton.interactable = false;
                     }
                 });
@@ -182,6 +197,16 @@ namespace Tanks.Complete
 
                 // Setup the Computer control button
                 slot.m_ComputerControlButton.onClick.AddListener(() => { slot.SetPlayerControlling(-1); });
+
+                // Language
+                if (m_GameManager.m_Language == GameManager.Language.Russian)
+                {
+                    transform.Find("StartMenu").transform.Find("StartGame").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "СТАРТ";
+                }
+                else if (m_GameManager.m_Language == GameManager.Language.English)
+                {
+                    transform.Find("StartMenu").transform.Find("StartGame").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "START";
+                }
             }
         }
 

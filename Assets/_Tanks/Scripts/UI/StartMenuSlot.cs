@@ -10,6 +10,8 @@ namespace Tanks.Complete
     public class StartMenuSlot : MonoBehaviour
     {
         public Color m_SlotColor;                       // The color the tank in that slot will take
+
+        public GameManager gameManager;
         
         [Header("References")]
         public RectTransform m_TankPreviewPosition;     // The Transform on which to place the Tank preview so it display at the right place on screen
@@ -33,6 +35,8 @@ namespace Tanks.Complete
         public bool IsComputer { get; set; }                // Is the slot used by a computer controlled tank or a player controlled one
         
         private Camera m_MenuCamera;                        // The Camera used to display the menu
+
+        private GameManager.Language m_Language;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -109,8 +113,28 @@ namespace Tanks.Complete
             }
         }
 
-        public void SetTankPreview(GameObject prefab)
+        public void SetTankPreview(GameObject prefab, GameManager.Language language)
         {
+            m_Language = language;
+
+            // change language for buttons
+            if (m_Language == GameManager.Language.Russian)
+            {
+                m_AddControlButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Нажмите чтобы добавить";
+                m_P1ControlButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Игрок 1";
+                m_P2ControlButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Игрок 2";
+                m_ComputerControlButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Компьютер";
+                m_OffControlButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Выкл";
+            }
+            else if (m_Language == GameManager.Language.English)
+            {
+                m_AddControlButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Click To Add Tank";
+                m_P1ControlButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "P1";
+                m_P2ControlButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "P2";
+                m_ComputerControlButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Computer";
+                m_OffControlButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Off";
+            }
+
             // If we already have a tank preview, destroy it
             if (TankPreview != null)
             {
@@ -132,7 +156,7 @@ namespace Tanks.Complete
             shoot.enabled = false;
 
             // update the tank stats text with this tank stats
-            m_TankStats.text = $"Speed {move.m_Speed}\nDamage {shoot.m_MaxDamage}\nHealth: {health.m_StartingHealth}";
+            m_TankStats.text = m_Language == GameManager.Language.English ? $"Speed {move.m_Speed}\nDamage {shoot.m_MaxDamage}\nHealth: {health.m_StartingHealth}": $"Скорость {move.m_Speed}\nУрон {shoot.m_MaxDamage}\nЗдоровье: {health.m_StartingHealth}";
             
             //move it to the right preview position so it appears in the right spot on screen
             var position = m_MenuCamera.WorldToScreenPoint(m_TankPreviewPosition.position);
