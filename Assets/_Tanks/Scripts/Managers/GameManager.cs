@@ -70,7 +70,11 @@ namespace Tanks.Complete
         private void Start()
         {
             m_CurrentState = GameState.MainMenu;
-            m_Language = Language.English;
+
+            if (m_Language == null)
+            {
+                m_Language = Language.English;
+            }
 
             if (m_TitleCanvas != null)
             {

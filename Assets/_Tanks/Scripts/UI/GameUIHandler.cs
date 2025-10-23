@@ -73,6 +73,34 @@ namespace Tanks.Complete
                 var rectTransform = m_PauseMenuButton.GetComponent<RectTransform>();
                 //force the button to be on top of everything so it can be clicked no matter what other screen is shown 
                 rectTransform.SetAsLastSibling();
+
+                //language
+                var pauseButtons = m_PauseMenu.transform.GetChild(0).transform.GetChild(0);
+                var controlMenu = m_PauseMenu.transform.GetChild(0).transform.GetChild(1);
+                if (m_GameManager.m_Language == GameManager.Language.English)
+                {
+                    pauseButtons.transform.Find("PauseTitle").GetComponent<TextMeshProUGUI>().text = "PAUSE";
+                    pauseButtons.transform.Find("ControlButton").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Controls";
+                    pauseButtons.transform.Find("ChangeTankButton").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Change Tanks";
+                    pauseButtons.transform.Find("Quit").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Quit";
+
+                    controlMenu.transform.Find("ControlsTitle").GetComponent<TextMeshProUGUI>().text = "Controls\r\n";
+                    controlMenu.transform.Find("ControlsSections").transform.Find("LeftKeyboardControl").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "<u>Left Keyboard</u>\r\n\r\n\r\nW: Foward\r\nS: Backward\r\nA: Rotate Left\r\nD: Rotate Right\r\nSpace: Fire\r\n";
+                    controlMenu.transform.Find("ControlsSections").transform.Find("RightKeyboardControl").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "<u>Right Keyboard</u>\r\n\r\n\r\nUp: Forward\r\nDown: Backward\r\nLeft: Rotate Left\r\nRight: Rotate Right\r\nEnter: Fire";
+                    controlMenu.transform.Find("BackButton").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "< BACK";
+                }
+                else if (m_GameManager.m_Language == GameManager.Language.Russian)
+                {
+                    pauseButtons.transform.Find("PauseTitle").GetComponent<TextMeshProUGUI>().text = "ПАУЗА";
+                    pauseButtons.transform.Find("ControlButton").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Управление";
+                    pauseButtons.transform.Find("ChangeTankButton").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Меню";
+                    pauseButtons.transform.Find("Quit").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Назад";
+
+                    controlMenu.transform.Find("ControlsTitle").GetComponent<TextMeshProUGUI>().text = "Управление\r\n";
+                    controlMenu.transform.Find("ControlsSections").transform.Find("LeftKeyboardControl").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "<u>Игрок 1</u>\r\n\r\n\r\nW: Вперед\r\nS: Назад\r\nA: Поворот налево\r\nD: Поворот направо\r\nПробел: Стрелять\r\n";
+                    controlMenu.transform.Find("ControlsSections").transform.Find("RightKeyboardControl").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "<u>Игрок 2</u>\r\n\r\n\r\nВверх: Вперед\r\nВниз: Назад\r\nЛево: Поворот налево\r\nПраво: Поворот направо\r\nEnter: Стрелять";
+                    controlMenu.transform.Find("BackButton").transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "< НАЗАД";
+                }
             }
 
             // We use an array because the code was originally written to have any number of prefabs and player, but
