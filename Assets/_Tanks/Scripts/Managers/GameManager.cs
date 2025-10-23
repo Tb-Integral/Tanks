@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace Tanks.Complete
 {
@@ -43,7 +44,7 @@ namespace Tanks.Complete
 
         [Header("Change Language In Menu")]
         public GameObject m_TitleCanvas;
-        
+
         [FormerlySerializedAs("m_Tanks")] 
         public TankManager[] m_SpawnPoints;         // A collection of managers for enabling and disabling different aspects of the tanks.
         
