@@ -1519,6 +1519,18 @@ PrefabInstance:
       propertyPath: m_AllowMSAA
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2819313449650211461, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
+      propertyPath: m_SlotColor.b
+      value: 0.85882354
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819313449650211461, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
+      propertyPath: m_SlotColor.g
+      value: 0.26666668
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819313449650211461, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
+      propertyPath: m_SlotColor.r
+      value: 0.19607843
+      objectReference: {fileID: 0}
     - target: {fileID: 2841254940337763014, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
       propertyPath: m_fontAsset
       value: 
@@ -1590,6 +1602,18 @@ PrefabInstance:
     - target: {fileID: 4112905263624988915, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156206094667260151, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
+      propertyPath: m_SlotColor.b
+      value: 0.19215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156206094667260151, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
+      propertyPath: m_SlotColor.g
+      value: 0.16862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156206094667260151, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
+      propertyPath: m_SlotColor.r
+      value: 0.85882354
       objectReference: {fileID: 0}
     - target: {fileID: 4242800187579963780, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
       propertyPath: m_fontAsset
@@ -1719,6 +1743,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7772922631316896374, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
+      propertyPath: m_SlotColor.b
+      value: 0.17254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772922631316896374, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
+      propertyPath: m_SlotColor.g
+      value: 0.7058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772922631316896374, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
+      propertyPath: m_SlotColor.r
+      value: 0.85882354
+      objectReference: {fileID: 0}
     - target: {fileID: 8497510596574353408, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
       propertyPath: m_fontAsset
       value: 
@@ -1734,6 +1770,18 @@ PrefabInstance:
     - target: {fileID: 8511720956500584823, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8525782389001097524, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
+      propertyPath: m_SlotColor.b
+      value: 0.3529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 8525782389001097524, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
+      propertyPath: m_SlotColor.g
+      value: 0.85882354
+      objectReference: {fileID: 0}
+    - target: {fileID: 8525782389001097524, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
+      propertyPath: m_SlotColor.r
+      value: 0.17254902
       objectReference: {fileID: 0}
     - target: {fileID: 8809046078169935340, guid: 328826c1fd47c3e4bb07a1dec3ec4c19, type: 3}
       propertyPath: m_fontAsset
