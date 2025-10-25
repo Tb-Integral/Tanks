@@ -225,7 +225,7 @@ MonoBehaviour:
   m_TankMask:
     serializedVersion: 2
     m_Bits: 512
-  m_ExplosionParticles: {fileID: 6950372259472959370}
+  m_ExplosionParticles: {fileID: 19807510, guid: ffe70ed75c451fe4a9584f6c78fd6fb1, type: 3}
   m_ExplosionAudio: {fileID: 9184786572633591583}
   m_MaxLifeTime: 2
   m_MaxDamage: 100
@@ -329,11 +329,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 537afde59eeba4c82897def1dccfba0a, type: 3}
---- !u!198 &6950372259472959370 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19807510, guid: 537afde59eeba4c82897def1dccfba0a, type: 3}
-  m_PrefabInstance: {fileID: 6950372259491175068}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6950372259491231702 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 486730, guid: 537afde59eeba4c82897def1dccfba0a, type: 3}

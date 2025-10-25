@@ -53,19 +53,23 @@ namespace Tanks.Complete
                 // Deal this damage to the tank.
                 targetHealth.TakeDamage (damage);
             }
+            // Создаем инстанс взрыва
+            ParticleSystem explosionInstance = Instantiate(m_ExplosionParticles, transform.position, transform.rotation);
 
             // Unparent the particles from the shell.
-            m_ExplosionParticles.transform.parent = null;
+            explosionInstance.transform.parent = null;
 
             // Play the particle system.
-            m_ExplosionParticles.Play();
-
-            // Play the explosion sound effect.
-            m_ExplosionAudio.Play();
+            explosionInstance.Play();
+            AudioSource explosionAudio = explosionInstance.GetComponent<AudioSource>();
+            if (explosionAudio != null && explosionAudio.enabled)
+            {
+                explosionAudio.Play();
+            }
 
             // Once the particles have finished, destroy the gameobject they are on.
             ParticleSystem.MainModule mainModule = m_ExplosionParticles.main;
-            Destroy (m_ExplosionParticles.gameObject, mainModule.duration);
+            Destroy(explosionInstance.gameObject, explosionInstance.main.duration);
 
             // Destroy the shell.
             Destroy (gameObject);
