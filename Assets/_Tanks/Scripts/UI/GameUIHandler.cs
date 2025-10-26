@@ -75,8 +75,8 @@ namespace Tanks.Complete
                 rectTransform.SetAsLastSibling();
 
                 //language
-                var pauseButtons = m_PauseMenu.transform.GetChild(0).transform.GetChild(0);
-                var controlMenu = m_PauseMenu.transform.GetChild(0).transform.GetChild(1);
+                var pauseButtons = m_PauseMenu.transform.GetChild(1).transform.GetChild(0);
+                var controlMenu = m_PauseMenu.transform.GetChild(1).transform.GetChild(1);
                 if (m_GameManager.m_Language == GameManager.Language.English)
                 {
                     pauseButtons.transform.Find("PauseTitle").GetComponent<TextMeshProUGUI>().text = "PAUSE";
