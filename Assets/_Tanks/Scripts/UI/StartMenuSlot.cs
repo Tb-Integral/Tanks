@@ -144,7 +144,7 @@ namespace Tanks.Complete
             //assign the right prefab
             TankPrefab = prefab;
             //then instantiate it as the preview
-            TankPreview = Instantiate(prefab);
+            TankPreview = Instantiate(prefab, m_TankPreviewPosition.transform, true);
             
             // get reference to all components
             var move = TankPreview.GetComponent<TankMovement> ();

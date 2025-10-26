@@ -120,10 +120,11 @@ namespace Tanks.Complete
             m_Instance.SetActive (false);
             m_Instance.SetActive (true);
         }
+
     }
-    
-    
-    #if UNITY_EDITOR
+
+
+#if UNITY_EDITOR
     // This is a class only used in the unity editor (and not in the final game). It customizes how the TankManager component
     // will appear in the Inspector. The default make a foldout entry where SpawnPoint is "inside" the TankManager foldout
     // in the manager array in the GameManager. This change this behavior to directly display the spawn point in the TankManager
