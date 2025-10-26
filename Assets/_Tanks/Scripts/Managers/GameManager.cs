@@ -16,7 +16,7 @@ namespace Tanks.Complete
             Game
         }
 
-        public enum Language 
+        public enum Language
         {
             English,
             Russian
@@ -30,7 +30,7 @@ namespace Tanks.Complete
             public GameObject UsedPrefab;
             public int ControlIndex;
         }
-        
+
         public int m_NumRoundsToWin = 5;            // The number of rounds a single player has to win to win the game.
         public float m_StartDelay = 3f;             // The delay between the start of RoundStarting and RoundPlaying phases.
         public float m_EndDelay = 3f;               // The delay between the end of RoundPlaying and RoundEnding phases.
@@ -45,14 +45,17 @@ namespace Tanks.Complete
         [Header("Change Language In Menu")]
         public GameObject m_TitleCanvas;
 
-        [FormerlySerializedAs("m_Tanks")] 
+        [Header("Mobile Controller")]
+        public GameObject m_MobileController;
+
+        [FormerlySerializedAs("m_Tanks")]
         public TankManager[] m_SpawnPoints;         // A collection of managers for enabling and disabling different aspects of the tanks.
-        
+
         private GameState m_CurrentState;
 
         [HideInInspector]
         public Language m_Language;
-        
+
         private int m_RoundNumber;                  // Which round the game is currently on.
         private WaitForSeconds m_StartWait;         // Used to have a delay whilst the round starts.
         private WaitForSeconds m_EndWait;           // Used to have a delay whilst the round or game ends.
@@ -71,15 +74,17 @@ namespace Tanks.Complete
         {
             m_CurrentState = GameState.MainMenu;
 
-            if (m_Language == null)
-            {
-                m_Language = Language.English;
-            }
+            m_MobileController.SetActive(false);
+
+            LoadLanguage();
 
             if (m_TitleCanvas != null)
             {
                 m_GameNameText = m_TitleCanvas.transform.Find("GameNameText").GetComponent<TextMeshProUGUI>();
                 m_SelectTankText = m_TitleCanvas.transform.Find("PlayerSelectButton").transform.Find("SelectTankText").GetComponent<TextMeshProUGUI>();
+
+                // update language
+                UpdateMenuText();
             }
 
             // Find the text used to display game info. Need to look at inactive object too, as the Menu prefab (which contains it) may be
@@ -105,15 +110,17 @@ namespace Tanks.Complete
 
         void GameStart()
         {
+            m_MobileController.SetActive(true);
+
             // Create the delays so they only have to be made once.
-            m_StartWait = new WaitForSeconds (m_StartDelay);
-            m_EndWait = new WaitForSeconds (m_EndDelay);
+            m_StartWait = new WaitForSeconds(m_StartDelay);
+            m_EndWait = new WaitForSeconds(m_EndDelay);
 
             SpawnAllTanks();
             SetCameraTargets();
 
             // Once the tanks have been created and the camera is using them as targets, start the game.
-            StartCoroutine (GameLoop ());
+            StartCoroutine(GameLoop());
         }
 
         void ChangeGameState(GameState newState)
@@ -143,7 +150,7 @@ namespace Tanks.Complete
             for (int i = 0; i < m_PlayerCount; i++)
             {
                 var playerData = m_TankData[i];
-                
+
                 // ... create them, set their player number and references needed for control.
                 m_SpawnPoints[i].m_Instance =
                     Instantiate(playerData.UsedPrefab, m_SpawnPoints[i].m_SpawnPoint.position, m_SpawnPoints[i].m_SpawnPoint.rotation) as GameObject;
@@ -153,7 +160,7 @@ namespace Tanks.Complete
                 //will re-enable this if needed when the game start)
                 var mov = m_SpawnPoints[i].m_Instance.GetComponent<TankMovement>();
                 mov.m_IsComputerControlled = false;
-                
+
                 m_SpawnPoints[i].m_PlayerNumber = i + 1;
                 m_SpawnPoints[i].ControlIndex = playerData.ControlIndex;
                 m_SpawnPoints[i].m_PlayerColor = playerData.TankColor;
@@ -163,9 +170,9 @@ namespace Tanks.Complete
             //we delayed setup after all tanks are created as they expect to have access to all other tanks in the manager
             foreach (var tank in m_SpawnPoints)
             {
-                if(tank.m_Instance == null)
+                if (tank.m_Instance == null)
                     continue;
-                
+
                 tank.Setup(this);
             }
         }
@@ -189,54 +196,54 @@ namespace Tanks.Complete
 
 
         // This is called from start and will run each phase of the game one after another.
-        private IEnumerator GameLoop ()
+        private IEnumerator GameLoop()
         {
             // Start off by running the 'RoundStarting' coroutine but don't return until it's finished.
-            yield return StartCoroutine (RoundStarting ());
+            yield return StartCoroutine(RoundStarting());
 
             // Once the 'RoundStarting' coroutine is finished, run the 'RoundPlaying' coroutine but don't return until it's finished.
-            yield return StartCoroutine (RoundPlaying());
+            yield return StartCoroutine(RoundPlaying());
 
             // Once execution has returned here, run the 'RoundEnding' coroutine, again don't return until it's finished.
-            yield return StartCoroutine (RoundEnding());
+            yield return StartCoroutine(RoundEnding());
 
             // This code is not run until 'RoundEnding' has finished.  At which point, check if a game winner has been found.
             if (m_GameWinner != null)
             {
                 // If there is a game winner, restart the level.
-                SceneManager.LoadScene (0);
+                SceneManager.LoadScene(0);
             }
             else
             {
                 // If there isn't a winner yet, restart this coroutine so the loop continues.
                 // Note that this coroutine doesn't yield.  This means that the current version of the GameLoop will end.
-                StartCoroutine (GameLoop ());
+                StartCoroutine(GameLoop());
             }
         }
 
 
-        private IEnumerator RoundStarting ()
+        private IEnumerator RoundStarting()
         {
             // As soon as the round starts reset the tanks and make sure they can't move.
-            ResetAllTanks ();
-            DisableTankControl ();
+            ResetAllTanks();
+            DisableTankControl();
 
             // Snap the camera's zoom and position to something appropriate for the reset tanks.
-            m_CameraControl.SetStartPositionAndSize ();
+            m_CameraControl.SetStartPositionAndSize();
 
             // Increment the round number and display text showing the players what round it is.
             m_RoundNumber++;
-            m_TitleText.text = (m_Language == Language.English ? "ROUND ": "–¿”Õƒ ") + m_RoundNumber;
+            m_TitleText.text = (m_Language == Language.English ? "ROUND " : "–¿”Õƒ ") + m_RoundNumber;
 
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return m_StartWait;
         }
 
 
-        private IEnumerator RoundPlaying ()
+        private IEnumerator RoundPlaying()
         {
             // As soon as the round begins playing let the players control the tanks.
-            EnableTankControl ();
+            EnableTankControl();
 
             // Clear the text from the screen.
             m_TitleText.text = string.Empty;
@@ -250,26 +257,26 @@ namespace Tanks.Complete
         }
 
 
-        private IEnumerator RoundEnding ()
+        private IEnumerator RoundEnding()
         {
             // Stop tanks from moving.
-            DisableTankControl ();
+            DisableTankControl();
 
             // Clear the winner from the previous round.
             m_RoundWinner = null;
 
             // See if there is a winner now the round is over.
-            m_RoundWinner = GetRoundWinner ();
+            m_RoundWinner = GetRoundWinner();
 
             // If there is a winner, increment their score.
             if (m_RoundWinner != null)
                 m_RoundWinner.m_Wins++;
 
             // Now the winner's score has been incremented, see if someone has one the game.
-            m_GameWinner = GetGameWinner ();
+            m_GameWinner = GetGameWinner();
 
             // Get a message based on the scores and whether or not there is a game winner and display it.
-            string message = EndMessage ();
+            string message = EndMessage();
             m_TitleText.text = message;
 
             // Wait for the specified length of time until yielding control back to the game loop.
@@ -294,8 +301,8 @@ namespace Tanks.Complete
             // If there are one or fewer tanks remaining return true, otherwise return false.
             return numTanksLeft <= 1;
         }
-        
-        
+
+
         // This function is to find out if there is a winner of the round.
         // This function is called with the assumption that 1 or fewer tanks are currently active.
         private TankManager GetRoundWinner()
@@ -386,22 +393,51 @@ namespace Tanks.Complete
         public void ChangeLanguageToRu()
         {
             m_Language = Language.Russian;
-
-            if (m_TitleCanvas != null)
-            {
-                m_GameNameText.text = "“¿Õ »!";
-                m_SelectTankText.text = "¬˚·‡Ú¸ “‡ÌÍ";
-            }
+            SaveLanguage();
+            UpdateMenuText();
         }
 
         public void ChangeLanguageToEng()
         {
             m_Language = Language.English;
+            SaveLanguage();
+            UpdateMenuText();
+        }
 
+        private void SaveLanguage()
+        {
+            PlayerPrefs.SetInt("SelectedLanguage", (int)m_Language);
+            PlayerPrefs.Save();
+        }
+
+        private void LoadLanguage()
+        {
+            if (PlayerPrefs.HasKey("SelectedLanguage"))
+            {
+                m_Language = (Language)PlayerPrefs.GetInt("SelectedLanguage");
+            }
+            else
+            {
+                m_Language = Language.English;
+            }
+        }
+
+        private void UpdateMenuText()
+        {
             if (m_TitleCanvas != null)
             {
-                m_GameNameText.text = "TANKS!";
-                m_SelectTankText.text = "Select Tank";
+                switch (m_Language)
+                {
+                    case Language.Russian:
+                        m_GameNameText.text = "“¿Õ »!";
+                        m_SelectTankText.text = "¬˚·‡Ú¸ “‡ÌÍ";
+                        break;
+                    case Language.English:
+                    default:
+                        m_GameNameText.text = "TANKS!";
+                        m_SelectTankText.text = "Select Tank";
+                        break;
+                }
             }
         }
     }
