@@ -46,7 +46,7 @@ namespace Tanks.Complete
         public GameObject m_TitleCanvas;
 
         [Header("Mobile Controller")]
-        public GameObject m_MobileController;
+        public MobileUIControl m_MobileController;
 
         [FormerlySerializedAs("m_Tanks")]
         public TankManager[] m_SpawnPoints;         // A collection of managers for enabling and disabling different aspects of the tanks.
@@ -74,7 +74,7 @@ namespace Tanks.Complete
         {
             m_CurrentState = GameState.MainMenu;
 
-            m_MobileController.SetActive(false);
+            m_MobileController.Hide();
 
             LoadLanguage();
 
@@ -110,7 +110,7 @@ namespace Tanks.Complete
 
         void GameStart()
         {
-            m_MobileController.SetActive(true);
+            m_MobileController.Show();
 
             // Create the delays so they only have to be made once.
             m_StartWait = new WaitForSeconds(m_StartDelay);
